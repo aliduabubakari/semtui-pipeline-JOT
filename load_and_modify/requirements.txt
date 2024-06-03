@@ -1,0 +1,3 @@
+requests
+pandas
+git+https://github.com/aliduabubakari/semtui1.1.git

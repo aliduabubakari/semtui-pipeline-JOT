@@ -1,0 +1,49 @@
+services:
+  load_and_modify:
+    build: ./load_and_modify
+    volumes:
+      - shared_data:/app/shared
+      - completion_data:/app/completion
+      - /Users/abubakarialidu/Documents/semtui_test/pipeline_results:/app/csv_dir
+    environment:
+      - API_URL=${API_URL}
+      - USERNAME=${USERNAME}
+      - PASSWORD=${PASSWORD}
+      - OUTPUT_PATH=${OUTPUT_PATH_SHARED}
+      - CSV_FILE_PATH=${CSV_FILE_PATH}
+
+  reconciliation:
+    build: ./reconciliation
+    depends_on:
+      - load_and_modify
+    volumes:
+      - shared_data:/app/shared
+      - completion_data:/app/completion
+    environment:
+      - API_URL=${API_URL}
+      - USERNAME=${USERNAME}
+      - PASSWORD=${PASSWORD}
+      - DATASET_ID=${DATASET_ID}
+      - TABLE_NAME=${TABLE_NAME}
+      - OUTPUT_PATH=${OUTPUT_PATH_SHARED}
+    entrypoint: ["sh", "-c", "while [ ! -f /app/completion/load_and_modify_done ]; do echo 'Waiting for load_and_modify to complete...'; sleep 5; done && python reconciliation.py"]
+
+  extension:
+    build: ./extension
+    depends_on:
+      - reconciliation
+    volumes:
+      - shared_data:/app/shared
+      - completion_data:/app/completion
+      - /Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir:/app/csv_output_dir
+    environment:
+      - API_URL=${API_URL}
+      - USERNAME=${USERNAME}
+      - PASSWORD=${PASSWORD}
+      - INPUT_PATH=${OUTPUT_PATH_SHARED}
+      - OUTPUT_PATH=${OUTPUT_PATH_CSV}
+    entrypoint: ["sh", "-c", "while [ ! -f /app/completion/reconciliation_done ]; do echo 'Waiting for reconciliation to complete...'; sleep 5; done && python extension.py"]
+
+volumes:
+  shared_data:
+  completion_data:
