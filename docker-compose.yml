@@ -1,10 +1,11 @@
+version: '3.8'
 services:
   load_and_modify:
     build: ./load_and_modify
     volumes:
-      - shared_data:/app/shared
-      - completion_data:/app/completion
-      - /Users/abubakarialidu/Documents/semtui_test/pipeline_results:/app/csv_dir
+      - ${LOCAL_SHARED_DATA_PATH}:/app/shared
+      - ${LOCAL_COMPLETION_DATA_PATH}:/app/completion
+      - ${CSV_FILE_PATH}:/app/csv_dir
     environment:
       - API_URL=${API_URL}
       - USERNAME=${USERNAME}
@@ -17,8 +18,8 @@ services:
     depends_on:
       - load_and_modify
     volumes:
-      - shared_data:/app/shared
-      - completion_data:/app/completion
+      - ${LOCAL_SHARED_DATA_PATH}:/app/shared
+      - ${LOCAL_COMPLETION_DATA_PATH}:/app/completion
     environment:
       - API_URL=${API_URL}
       - USERNAME=${USERNAME}
@@ -33,9 +34,9 @@ services:
     depends_on:
       - reconciliation
     volumes:
-      - shared_data:/app/shared
-      - completion_data:/app/completion
-      - /Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir:/app/csv_output_dir
+      - ${LOCAL_SHARED_DATA_PATH}:/app/shared
+      - ${LOCAL_COMPLETION_DATA_PATH}:/app/completion
+      - ${LOCAL_CSV_OUTPUT_DIR_PATH}:/app/csv_output_dir
     environment:
       - API_URL=${API_URL}
       - USERNAME=${USERNAME}
