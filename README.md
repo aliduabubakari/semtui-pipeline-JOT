@@ -1,4 +1,4 @@
-# SEMTUI Pipeline Project jot
+# SEMTUI Pipeline Project
 
 ## Overview
 
@@ -20,9 +20,9 @@ The pipeline is orchestrated using Docker Compose to ensure each step is execute
 Create the following directory structure to store the necessary files and outputs:
 
 ```sh
-mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/shared_data
-mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir
-mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/completion_data
+mkdir -p /path/to/your/project/pipeline_results/shared_data
+mkdir -p /path/to/your/project/pipeline_results/csv_output_dir
+mkdir -p /path/to/your/project/pipeline_results/completion_data
 ```
 
 ## .env File
@@ -30,11 +30,11 @@ mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/completion
 Create a `.env` file in the root directory of your project with the following content. This file will contain all the necessary environment variables:
 
 ```env
-API_URL=http://192.168.99.175:3003/api/
-USERNAME=test
-PASSWORD=test
-DATASET_ID=30
-TABLE_NAME=New_Table3
+API_URL=http://your.api.url/api/
+USERNAME=your_username
+PASSWORD=your_password
+DATASET_ID=your_dataset_id
+TABLE_NAME=your_table_name
 COLUMN_NAME=City
 ID_RECONCILIATOR=geocodingHere
 RECONCILIATED_COLUMN_NAME=City
@@ -45,10 +45,10 @@ ID_EXTENDER=meteoPropertiesOpenMeteo
 WEATHER_PARAMS=apparent_temperature_max,apparent_temperature_min,precipitation_sum
 OUTPUT_PATH_SHARED=/app/shared/processed_data.json
 OUTPUT_PATH_CSV=/app/csv_output_dir/extended_data.csv
-CSV_FILE_PATH=/app/csv_dir/JOT sample original.csv
-LOCAL_SHARED_DATA_PATH=/Users/abubakarialidu/Documents/semtui_test/pipeline_results/shared_data
-LOCAL_CSV_OUTPUT_DIR_PATH=/Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir
-LOCAL_COMPLETION_DATA_PATH=/Users/abubakarialidu/Documents/semtui_test/pipeline_results/completion_data
+CSV_FILE_PATH=/app/csv_dir/your_input_file.csv
+LOCAL_SHARED_DATA_PATH=/path/to/your/project/pipeline_results/shared_data
+LOCAL_CSV_OUTPUT_DIR_PATH=/path/to/your/project/pipeline_results/csv_output_dir
+LOCAL_COMPLETION_DATA_PATH=/path/to/your/project/pipeline_results/completion_data
 ```
 
 ## Docker Compose Configuration
@@ -124,9 +124,9 @@ volumes:
    Ensure the directories specified in the `.env` file are created on your local machine:
 
    ```sh
-   mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/shared_data
-   mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir
-   mkdir -p /Users/abubakarialidu/Documents/semtui_test/pipeline_results/completion_data
+   mkdir -p /path/to/your/project/pipeline_results/shared_data
+   mkdir -p /path/to/your/project/pipeline_results/csv_output_dir
+   mkdir -p /path/to/your/project/pipeline_results/completion_data
    ```
 
 3. **Build and Run the Docker Containers**
@@ -142,7 +142,7 @@ volumes:
    After the pipeline completes, the extended CSV file will be available in the specified output directory:
 
    ```sh
-   /Users/abubakarialidu/Documents/semtui_test/pipeline_results/csv_output_dir/extended_data.csv
+   /path/to/your/project/pipeline_results/csv_output_dir/extended_data.csv
    ```
 
 ## Troubleshooting
